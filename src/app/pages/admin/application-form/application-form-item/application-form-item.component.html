@@ -1,40 +1,248 @@
-<nb-card size="large" accent="info">
+<nb-card accent="info" style="height: 600px">
   <nb-card-header>EMPLOYMENT APPLICATION FORM</nb-card-header>
   <nb-card-body class="m-4">
     <nb-stepper #stepper>
-      <nb-step [stepControl]="firstForm" label="PERSONAL DETAILS">
-        <form
-          [formGroup]="firstForm"
-          (ngSubmit)="onFirstSubmit()"
-          class="step-container"
-        >
-          <p class="lorem">
-            Lorizzle ipsum dolizzle stuff fizzle, consectetuer adipiscing break
-            it down. Nullizzle sapien velizzle, my shizz pimpin', shizzle my
-            nizzle crocodizzle shut the shizzle up, gravida vizzle, dang.
-          </p>
-          <div class="input-group">
-            <input
-              nbInput
-              type="text"
-              placeholder="Enter your name"
-              class="form-control"
-              formControlName="firstCtrl"
-              [ngClass]="{
-                'form-control-danger':
-                  firstForm.invalid && (firstForm.dirty || firstForm.touched)
-              }"
-            />
+      <!-- First Step : Personal Detail -->
+      <nb-step [stepControl]="personalForm" label="PERSONAL DETAILS">
+        <form [formGroup]="personalForm" class="step-container">
+          <div class="col-lg-12">
+            <h4 >Step 1 : PERSONAL DETAILS</h4>
+            <hr>
           </div>
-          <button nbButton nbStepperNext>next</button>
+          <div class="col-lg-12">
+            <!-- Job Position -->
+            <div class="row ">
+              <div class="col-lg-6">
+                <div><label class="form-label">Position Applied For</label></div>
+                <nb-select placeholder="Please select jop position" formControlName="jobPositionId" fullWidth >
+                  <nb-option *ngFor="let job of availabeJopPositions" [value]="job.id">{{job.title}}</nb-option>
+                </nb-select>
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('jobPositionId').touched &&
+                personalForm.get('jobPositionId').errors?.required
+              ">Please select job position.</span>
+              </div>
+            </div>
+            <div class="row">
+              <!-- fullName -->
+              <div class="col-lg-6 mt-2">
+                <div><label class="form-label">Full Name</label></div>
+                <input type="text" nbInput fullWidth placeholder="Full Name (As per NRIC or Passport)"
+                  formControlName="fullName">
+                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('fullName').touched &&
+                personalForm.get('fullName').errors?.required
+              ">Full name is required.</span>
+              </div>
+              <!-- Chinese Name -->
+              <div class="col-lg-6 mt-2">
+                <div><label class="form-label">Chinese Name (If Any)</label></div>
+                <input type="text" nbInput fullWidth placeholder="Chinese Name (If Any)" formControlName="chineseName">
+              </div>
+              <!-- NRIC or Passport No -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">NRIC or Passport No</label></div>
+                <input type="text" nbInput fullWidth placeholder="NRIC or Passport No" formControlName="identityNo">
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('identityNo').touched &&
+                personalForm.get('identityNo').errors?.required
+              ">Identity No is required.</span>
+              </div>
+              <!-- SEX -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Sex</label></div>
+                <nb-select placeholder="Please select your sex" formControlName="gender" fullWidth >
+                  <nb-option  value="1">Male</nb-option>
+                  <nb-option  value="2">Female</nb-option>
+                </nb-select>
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('gender').touched &&
+                personalForm.get('gender').errors?.required
+              ">Please select your sex</span>
+              </div>
+               <!-- Date Of Birth -->
+               <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Date Of Birth</label></div>
+                <input nbInput
+                fullWidth
+                readOnly
+                placeholder="Date of birth"
+                [nbDatepicker]="picker"
+                formControlName="dateOfBirth">
+                <nb-datepicker #picker [max]="max" (dateChange)="calculateUserAge($event)"></nb-datepicker>
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('dateOfBirth').touched &&
+                personalForm.get('dateOfBirth').errors?.required
+              ">Please select your date of birth</span>
+              </div>
+                <!-- age -->
+                <div class="col-lg-3 mt-2">
+                  <div><label class="form-label">Age</label></div>
+                  <input type="text"
+                  nbInput fullWidth
+                  numberOnly
+                  placeholder="Age"
+                  formControlName="age">
+                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                  personalForm.get('age').touched &&
+                  personalForm.get('age').errors?.required
+                ">Age is required.</span>
+                </div>
+                 <!-- Race -->
+                 <div class="col-lg-3 mt-2">
+                  <div><label class="form-label">Race</label></div>
+                  <input type="text"
+                  nbInput fullWidth
+                  numberOnly
+                  placeholder="Race"
+                  formControlName="race">
+                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                  personalForm.get('race').touched &&
+                  personalForm.get('race').errors?.required
+                ">Please enter your race.</span>
+                </div>
+                 <!-- Religion -->
+                 <div class="col-lg-3 mt-2">
+                  <div><label class="form-label">Religion</label></div>
+                  <input type="text"
+                  nbInput fullWidth
+                  numberOnly
+                  placeholder="Religion"
+                  formControlName="religion">
+                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                  personalForm.get('religion').touched &&
+                  personalForm.get('religion').errors?.required
+                ">Please enter your religion.</span>
+                </div>
+                 <!-- Nationality -->
+                 <div class="col-lg-3 mt-2">
+                  <div><label class="form-label">Nationality</label></div>
+                  <input type="text"
+                  nbInput fullWidth
+                  numberOnly
+                  placeholder="Nationality"
+                  formControlName="nationality">
+                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                  personalForm.get('nationality').touched &&
+                  personalForm.get('nationality').errors?.required
+                ">Please enter your nationality.</span>
+                </div>
+                 <!-- Marital Status -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Marital Status</label></div>
+                <nb-select placeholder="Please select your sex" formControlName="materialStatus" fullWidth >
+                  <nb-option  value="1">Single</nb-option>
+                  <nb-option  value="2">Married</nb-option>
+                  <nb-option  value="2">Divirced</nb-option>
+                  <nb-option  value="2">Widiwed</nb-option>
+                </nb-select>
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('materialStatus').touched &&
+                personalForm.get('materialStatus').errors?.required
+              ">Please select your material status.</span>
+              </div>
+               <!-- Permanent Address -->
+               <div class="col-lg-6 mt-2">
+                <div><label class="form-label">Permanent Address</label></div>
+                <textarea nbInput
+                fullWidth
+                placeholder="Permanent Address"
+                formControlName="permanentAddress"></textarea>
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('permanentAddress').touched &&
+                personalForm.get('permanentAddress').errors?.required
+              ">Permanent Address is required.</span>
+              </div>
+               <!-- Correspondence Address -->
+               <div class="col-lg-6 mt-2">
+                <div><label class="form-label">Correspondence Address</label></div>
+                <textarea nbInput
+                fullWidth
+                placeholder="Correspondence Address"
+                formControlName="correspondenceAddress"></textarea>
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('correspondenceAddress').touched &&
+                personalForm.get('correspondenceAddress').errors?.required
+              ">Correspondence Address is required.</span>
+              </div>
+               <!-- HOUSE NO. -->
+               <div class="col-lg-3 mt-2">
+                <div><label class="form-label">HOUSE NO.</label></div>
+                <input type="text"
+                nbInput fullWidth
+                numberOnly
+                placeholder="HOUSE NO."
+                formControlName="houseNo">
+              </div>
+              <!-- MOBILE NO. -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">MOBILE NO.</label></div>
+                <input type="text"
+                nbInput fullWidth
+                numberOnly
+                placeholder="MOBILE NO."
+                formControlName="mobileNo">
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('mobileNo').touched &&
+                personalForm.get('mobileNo').errors?.required
+              ">Mobile Number is required.</span>
+              </div>
+               <!-- Email Address -->
+               <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Email Address</label></div>
+                <input type="text"
+                nbInput fullWidth
+                placeholder="Email Address"
+                formControlName="email">
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('email').touched &&
+                personalForm.get('email').errors?.required
+              ">Email address is required.</span>
+              <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('email').touched &&
+                personalForm.get('email').errors?.email
+              ">Please input correct email address.</span>
+              </div>
+               <!-- Possess Car Driving License -->
+               <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Possess Car Driving License</label></div>
+                <nb-select placeholder="Please select" formControlName="drivingLicense" fullWidth >
+                  <nb-option  value="1">Yes</nb-option>
+                  <nb-option  value="2">No</nb-option>
+                </nb-select>
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                personalForm.get('drivingLicense').touched &&
+                personalForm.get('drivingLicense').errors?.required
+              ">Please select an option.</span>
+              </div>
+               <!-- EPF No -->
+               <div class="col-lg-3 mt-2">
+                <div><label class="form-label">EPF No</label></div>
+                <input type="text"
+                nbInput fullWidth
+                placeholder="EPF No"
+                formControlName="epfNo">
+              </div>
+               <!-- Income Tax No -->
+               <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Income Tax No</label></div>
+                <input type="text"
+                nbInput fullWidth
+                placeholder="Income Tax No"
+                formControlName="taxNo">
+              </div>
+
+            </div>
+          </div>
         </form>
       </nb-step>
+
+
+
+
+
       <nb-step [stepControl]="secondForm" label="FAMILY DETAILS">
-        <form
-          [formGroup]="secondForm"
-          (ngSubmit)="onSecondSubmit()"
-          class="step-container"
-        >
+        <form [formGroup]="secondForm"  class="step-container">
           <p class="lorem">
             Pellentesque we gonna chung tortor. Sizzle pizzle. Fizzle izzle
             dolor dapibus fo shizzle mah nizzle fo rizzle, mah home g-dizzle
@@ -42,152 +250,96 @@
             shizzle tortor.
           </p>
           <div class="input-group">
-            <input
-              nbInput
-              type="text"
-              placeholder="Enter favorite movie"
-              class="form-control"
-              formControlName="secondCtrl"
-              [ngClass]="{
+            <input nbInput type="text" placeholder="Enter favorite movie" class="form-control"
+              formControlName="secondCtrl" [ngClass]="{
                 'form-control-danger':
                   secondForm.invalid && (secondForm.dirty || secondForm.touched)
-              }"
-            />
+              }" />
           </div>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>next</button>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="EDUCATIONAL & EMPLOYMENT">
-        <form
-          [formGroup]="thirdForm"
-          (ngSubmit)="onThirdSubmit()"
-          class="step-container"
-        >
+        <form [formGroup]="thirdForm"  class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
           </p>
           <div class="input-group">
-            <input
-              nbInput
-              type="text"
-              placeholder="Enter something"
-              class="form-control"
-              formControlName="thirdCtrl"
+            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
               [ngClass]="{
                 'form-control-danger':
                   thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)
-              }"
-            />
+              }" />
           </div>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>Confirm</button>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="LANGUAGE PROFICIENCY">
-        <form
-          [formGroup]="thirdForm"
-          (ngSubmit)="onThirdSubmit()"
-          class="step-container"
-        >
+        <form [formGroup]="thirdForm"  class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
           </p>
           <div class="input-group">
-            <input
-              nbInput
-              type="text"
-              placeholder="Enter something"
-              class="form-control"
-              formControlName="thirdCtrl"
+            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
               [ngClass]="{
                 'form-control-danger':
                   thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)
-              }"
-            />
+              }" />
           </div>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>Confirm</button>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="REFERENCES">
-        <form
-          [formGroup]="thirdForm"
-          (ngSubmit)="onThirdSubmit()"
-          class="step-container"
-        >
+        <form [formGroup]="thirdForm"  class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
           </p>
           <div class="input-group">
-            <input
-              nbInput
-              type="text"
-              placeholder="Enter something"
-              class="form-control"
-              formControlName="thirdCtrl"
+            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
               [ngClass]="{
                 'form-control-danger':
                   thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)
-              }"
-            />
+              }" />
           </div>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>Confirm</button>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="ADDITIONAL INFORMATION">
-        <form
-          [formGroup]="thirdForm"
-          (ngSubmit)="onThirdSubmit()"
-          class="step-container"
-        >
+        <form [formGroup]="thirdForm"  class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
           </p>
           <div class="input-group">
-            <input
-              nbInput
-              type="text"
-              placeholder="Enter something"
-              class="form-control"
-              formControlName="thirdCtrl"
+            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
               [ngClass]="{
                 'form-control-danger':
                   thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)
-              }"
-            />
+              }" />
           </div>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>Confirm</button>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="DECLARATIONS">
-        <form
-          [formGroup]="thirdForm"
-          (ngSubmit)="onThirdSubmit()"
-          class="step-container"
-        >
+        <form [formGroup]="thirdForm"  class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
           </p>
           <div class="input-group">
-            <input
-              nbInput
-              type="text"
-              placeholder="Enter something"
-              class="form-control"
-              formControlName="thirdCtrl"
+            <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
               [ngClass]="{
                 'form-control-danger':
                   thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)
-              }"
-            />
+              }" />
           </div>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>Confirm</button>
@@ -195,5 +347,18 @@
       </nb-step>
     </nb-stepper>
   </nb-card-body>
-  <nb-card-footer>Buttons will show here</nb-card-footer>
+  <nb-card-footer class="text-center">
+    <button nbButton
+    class="mr-2"
+    shape="semi-round"
+    status="basic"
+    (click)="goBack()"
+    >Back</button>
+    <button nbButton
+    shape="semi-round"
+    status="info"
+    (click)="goForward()"
+    >Next</button>
+
+  </nb-card-footer>
 </nb-card>

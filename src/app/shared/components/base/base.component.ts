@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AppInjector } from './app-injector.service';
 import { UntilDestroy } from '@ngneat/until-destroy';
 
-import { NbToastrService } from '@nebular/theme';
+import { NbDateService, NbToastrService } from '@nebular/theme';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
@@ -14,6 +14,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export abstract class BaseComponent implements OnInit {
   protected router: Router;
   protected toastrService: NbToastrService;
+  protected dateService: NbDateService<Date>
   protected fb: FormBuilder;
   //shared variables
   roles: string[];
@@ -22,6 +23,7 @@ export abstract class BaseComponent implements OnInit {
     this.router = AppInjector.injector.get(Router);
     this.fb = AppInjector.injector.get(FormBuilder);
     this.toastrService = AppInjector.injector.get(NbToastrService);
+    this.dateService = AppInjector.injector.get(NbDateService)
     //this.roles = this.userService.getRoles();
 
   }
