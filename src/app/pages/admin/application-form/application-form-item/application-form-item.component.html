@@ -1,4 +1,4 @@
-<nb-card accent="info" style="height: 600px">
+<nb-card accent="info" [style.height]="dimensionService.htmlDimensitopns.value.pageHeight">
   <nb-card-header>EMPLOYMENT APPLICATION FORM</nb-card-header>
   <nb-card-body class="m-4">
     <nb-stepper #stepper>
@@ -6,7 +6,7 @@
       <nb-step [stepControl]="personalForm" label="PERSONAL DETAILS">
         <form [formGroup]="personalForm" class="step-container">
           <div class="col-lg-12">
-            <h4 >Step 1 : PERSONAL DETAILS</h4>
+            <h4>Step 1 : Personal Details</h4>
             <hr>
           </div>
           <div class="col-lg-12">
@@ -14,7 +14,7 @@
             <div class="row ">
               <div class="col-lg-6">
                 <div><label class="form-label">Position Applied For</label></div>
-                <nb-select placeholder="Please select jop position" formControlName="jobPositionId" fullWidth >
+                <nb-select placeholder="Please select jop position" formControlName="jobPositionId" fullWidth>
                   <nb-option *ngFor="let job of availabeJopPositions" [value]="job.id">{{job.title}}</nb-option>
                 </nb-select>
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
@@ -29,7 +29,7 @@
                 <div><label class="form-label">Full Name</label></div>
                 <input type="text" nbInput fullWidth placeholder="Full Name (As per NRIC or Passport)"
                   formControlName="fullName">
-                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('fullName').touched &&
                 personalForm.get('fullName').errors?.required
               ">Full name is required.</span>
@@ -51,185 +51,144 @@
               <!-- SEX -->
               <div class="col-lg-3 mt-2">
                 <div><label class="form-label">Sex</label></div>
-                <nb-select placeholder="Please select your sex" formControlName="gender" fullWidth >
-                  <nb-option  value="1">Male</nb-option>
-                  <nb-option  value="2">Female</nb-option>
+                <nb-select placeholder="Please select your sex" formControlName="gender" fullWidth>
+                  <nb-option value="1">Male</nb-option>
+                  <nb-option value="2">Female</nb-option>
                 </nb-select>
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('gender').touched &&
                 personalForm.get('gender').errors?.required
               ">Please select your sex</span>
               </div>
-               <!-- Date Of Birth -->
-               <div class="col-lg-3 mt-2">
+              <!-- Date Of Birth -->
+              <div class="col-lg-3 mt-2">
                 <div><label class="form-label">Date Of Birth</label></div>
-                <input nbInput
-                fullWidth
-                readOnly
-                placeholder="Date of birth"
-                [nbDatepicker]="picker"
-                formControlName="dateOfBirth">
+                <input nbInput fullWidth readOnly placeholder="Date of birth" [nbDatepicker]="picker"
+                  formControlName="dateOfBirth">
                 <nb-datepicker #picker [max]="max" (dateChange)="calculateUserAge($event)"></nb-datepicker>
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('dateOfBirth').touched &&
                 personalForm.get('dateOfBirth').errors?.required
               ">Please select your date of birth</span>
               </div>
-                <!-- age -->
-                <div class="col-lg-3 mt-2">
-                  <div><label class="form-label">Age</label></div>
-                  <input type="text"
-                  nbInput fullWidth
-                  numberOnly
-                  placeholder="Age"
-                  formControlName="age">
-                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+              <!-- age -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Age</label></div>
+                <input type="text" nbInput fullWidth numberOnly placeholder="Age" formControlName="age">
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                   personalForm.get('age').touched &&
                   personalForm.get('age').errors?.required
                 ">Age is required.</span>
-                </div>
-                 <!-- Race -->
-                 <div class="col-lg-3 mt-2">
-                  <div><label class="form-label">Race</label></div>
-                  <input type="text"
-                  nbInput fullWidth
-                  numberOnly
-                  placeholder="Race"
-                  formControlName="race">
-                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+              </div>
+              <!-- Race -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Race</label></div>
+                <input type="text" nbInput fullWidth numberOnly placeholder="Race" formControlName="race">
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                   personalForm.get('race').touched &&
                   personalForm.get('race').errors?.required
                 ">Please enter your race.</span>
-                </div>
-                 <!-- Religion -->
-                 <div class="col-lg-3 mt-2">
-                  <div><label class="form-label">Religion</label></div>
-                  <input type="text"
-                  nbInput fullWidth
-                  numberOnly
-                  placeholder="Religion"
-                  formControlName="religion">
-                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+              </div>
+              <!-- Religion -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Religion</label></div>
+                <input type="text" nbInput fullWidth numberOnly placeholder="Religion" formControlName="religion">
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                   personalForm.get('religion').touched &&
                   personalForm.get('religion').errors?.required
                 ">Please enter your religion.</span>
-                </div>
-                 <!-- Nationality -->
-                 <div class="col-lg-3 mt-2">
-                  <div><label class="form-label">Nationality</label></div>
-                  <input type="text"
-                  nbInput fullWidth
-                  numberOnly
-                  placeholder="Nationality"
-                  formControlName="nationality">
-                  <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+              </div>
+              <!-- Nationality -->
+              <div class="col-lg-3 mt-2">
+                <div><label class="form-label">Nationality</label></div>
+                <input type="text" nbInput fullWidth numberOnly placeholder="Nationality" formControlName="nationality">
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                   personalForm.get('nationality').touched &&
                   personalForm.get('nationality').errors?.required
                 ">Please enter your nationality.</span>
-                </div>
-                 <!-- Marital Status -->
+              </div>
+              <!-- Marital Status -->
               <div class="col-lg-3 mt-2">
                 <div><label class="form-label">Marital Status</label></div>
-                <nb-select placeholder="Please select your sex" formControlName="materialStatus" fullWidth >
-                  <nb-option  value="1">Single</nb-option>
-                  <nb-option  value="2">Married</nb-option>
-                  <nb-option  value="2">Divirced</nb-option>
-                  <nb-option  value="2">Widiwed</nb-option>
+                <nb-select placeholder="Please select your sex" formControlName="materialStatus" fullWidth>
+                  <nb-option value=1>Single</nb-option>
+                  <nb-option value=2>Married</nb-option>
+                  <nb-option value=3>Divirced</nb-option>
+                  <nb-option value=4>Widiwed</nb-option>
                 </nb-select>
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('materialStatus').touched &&
                 personalForm.get('materialStatus').errors?.required
               ">Please select your material status.</span>
               </div>
-               <!-- Permanent Address -->
-               <div class="col-lg-6 mt-2">
+              <!-- Permanent Address -->
+              <div class="col-lg-6 mt-2">
                 <div><label class="form-label">Permanent Address</label></div>
-                <textarea nbInput
-                fullWidth
-                placeholder="Permanent Address"
-                formControlName="permanentAddress"></textarea>
+                <textarea nbInput fullWidth placeholder="Permanent Address"
+                  formControlName="permanentAddress"></textarea>
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('permanentAddress').touched &&
                 personalForm.get('permanentAddress').errors?.required
               ">Permanent Address is required.</span>
               </div>
-               <!-- Correspondence Address -->
-               <div class="col-lg-6 mt-2">
+              <!-- Correspondence Address -->
+              <div class="col-lg-6 mt-2">
                 <div><label class="form-label">Correspondence Address</label></div>
-                <textarea nbInput
-                fullWidth
-                placeholder="Correspondence Address"
-                formControlName="correspondenceAddress"></textarea>
+                <textarea nbInput fullWidth placeholder="Correspondence Address"
+                  formControlName="correspondenceAddress"></textarea>
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('correspondenceAddress').touched &&
                 personalForm.get('correspondenceAddress').errors?.required
               ">Correspondence Address is required.</span>
               </div>
-               <!-- HOUSE NO. -->
-               <div class="col-lg-3 mt-2">
+              <!-- HOUSE NO. -->
+              <div class="col-lg-3 mt-2">
                 <div><label class="form-label">HOUSE NO.</label></div>
-                <input type="text"
-                nbInput fullWidth
-                numberOnly
-                placeholder="HOUSE NO."
-                formControlName="houseNo">
+                <input type="text" nbInput fullWidth numberOnly placeholder="HOUSE NO." formControlName="houseNo">
               </div>
               <!-- MOBILE NO. -->
               <div class="col-lg-3 mt-2">
                 <div><label class="form-label">MOBILE NO.</label></div>
-                <input type="text"
-                nbInput fullWidth
-                numberOnly
-                placeholder="MOBILE NO."
-                formControlName="mobileNo">
+                <input type="text" nbInput fullWidth numberOnly placeholder="MOBILE NO." formControlName="mobileNo">
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('mobileNo').touched &&
                 personalForm.get('mobileNo').errors?.required
               ">Mobile Number is required.</span>
               </div>
-               <!-- Email Address -->
-               <div class="col-lg-3 mt-2">
+              <!-- Email Address -->
+              <div class="col-lg-3 mt-2">
                 <div><label class="form-label">Email Address</label></div>
-                <input type="text"
-                nbInput fullWidth
-                placeholder="Email Address"
-                formControlName="email">
+                <input type="text" nbInput fullWidth placeholder="Email Address" formControlName="email">
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('email').touched &&
                 personalForm.get('email').errors?.required
               ">Email address is required.</span>
-              <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('email').touched &&
                 personalForm.get('email').errors?.email
               ">Please input correct email address.</span>
               </div>
-               <!-- Possess Car Driving License -->
-               <div class="col-lg-3 mt-2">
+              <!-- Possess Car Driving License -->
+              <div class="col-lg-3 mt-2">
                 <div><label class="form-label">Possess Car Driving License</label></div>
-                <nb-select placeholder="Please select" formControlName="drivingLicense" fullWidth >
-                  <nb-option  value="1">Yes</nb-option>
-                  <nb-option  value="2">No</nb-option>
+                <nb-select placeholder="Please select" formControlName="drivingLicense" fullWidth>
+                  <nb-option value="1">Yes</nb-option>
+                  <nb-option value="2">No</nb-option>
                 </nb-select>
                 <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
                 personalForm.get('drivingLicense').touched &&
                 personalForm.get('drivingLicense').errors?.required
               ">Please select an option.</span>
               </div>
-               <!-- EPF No -->
-               <div class="col-lg-3 mt-2">
+              <!-- EPF No -->
+              <div class="col-lg-3 mt-2">
                 <div><label class="form-label">EPF No</label></div>
-                <input type="text"
-                nbInput fullWidth
-                placeholder="EPF No"
-                formControlName="epfNo">
+                <input type="text" nbInput fullWidth placeholder="EPF No" formControlName="epfNo">
               </div>
-               <!-- Income Tax No -->
-               <div class="col-lg-3 mt-2">
+              <!-- Income Tax No -->
+              <div class="col-lg-3 mt-2">
                 <div><label class="form-label">Income Tax No</label></div>
-                <input type="text"
-                nbInput fullWidth
-                placeholder="Income Tax No"
-                formControlName="taxNo">
+                <input type="text" nbInput fullWidth placeholder="Income Tax No" formControlName="taxNo">
               </div>
 
             </div>
@@ -241,27 +200,177 @@
 
 
 
-      <nb-step [stepControl]="secondForm" label="FAMILY DETAILS">
-        <form [formGroup]="secondForm"  class="step-container">
-          <p class="lorem">
-            Pellentesque we gonna chung tortor. Sizzle pizzle. Fizzle izzle
-            dolor dapibus fo shizzle mah nizzle fo rizzle, mah home g-dizzle
-            tempus tempor. Maurizzle cool nibh owned turpizzle. My shizz fo
-            shizzle tortor.
-          </p>
-          <div class="input-group">
-            <input nbInput type="text" placeholder="Enter favorite movie" class="form-control"
-              formControlName="secondCtrl" [ngClass]="{
-                'form-control-danger':
-                  secondForm.invalid && (secondForm.dirty || secondForm.touched)
-              }" />
+      <nb-step [stepControl]="familyForm" label="FAMILY DETAILS">
+        <form [formGroup]="familyForm" class="step-container">
+          <div class="col-lg-12">
+            <h4>Step 2 : Family Details</h4>
+            <hr>
           </div>
-          <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>next</button>
+          <div class="col-lg-12">
+            <div class="row ">
+              <div class="col-lg-12">
+                <nb-accordion multi>
+                  <!-- father's info -->
+                  <nb-accordion-item [expanded]="true">
+                    <nb-accordion-item-header>
+                      Father's Info
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <!-- name -->
+                          <div class="col-lg-9">
+                            <div><label class="form-label">Name</label></div>
+                            <input type="text" nbInput fullWidth placeholder="Father's Name"
+                              formControlName="fatherName">
+                            <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                familyForm.get('fatherName').touched &&
+                familyForm.get('fatherName').errors?.required
+              ">Father's name is required.</span>
+                          </div>
+                          <!-- age -->
+                          <div class="col-lg-3">
+                            <div><label class="form-label">Age</label></div>
+                            <input type="text" nbInput
+                            fullWidth
+                            numberOnly
+                            placeholder="Father's Age"
+                              formControlName="fatherAge">
+
+                          </div>
+                           <!-- Occupation -->
+                           <div class="col-lg-6 mt-2">
+                            <div><label class="form-label">Occupation</label></div>
+                            <input type="text" nbInput
+                            fullWidth
+                            placeholder="Father's Occupation"
+                              formControlName="fatherOccupation">
+
+                          </div>
+                            <!-- Contact No -->
+                            <div class="col-lg-6 mt-2">
+                              <div><label class="form-label">Contact No</label></div>
+                              <input type="text" nbInput
+                              fullWidth
+                              placeholder="Father's Contact No"
+                                formControlName="fatherContactNo">
+
+                            </div>
+                        </div>
+                      </div>
+                    </nb-accordion-item-body>
+                  </nb-accordion-item>
+                   <!-- Mother's info -->
+                   <nb-accordion-item [expanded]="true">
+                    <nb-accordion-item-header>
+                      Mother's Info
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <!-- name -->
+                          <div class="col-lg-9">
+                            <div><label class="form-label">Name</label></div>
+                            <input type="text" nbInput fullWidth placeholder="Mother's Name"
+                              formControlName="motherName">
+                            <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                familyForm.get('motherName').touched &&
+                familyForm.get('motherName').errors?.required
+              ">Mother's name is required.</span>
+                          </div>
+                          <!-- age -->
+                          <div class="col-lg-3">
+                            <div><label class="form-label">Age</label></div>
+                            <input type="text" nbInput
+                            fullWidth
+                            numberOnly
+                            placeholder="Mother's Age"
+                              formControlName="motherAge">
+
+                          </div>
+                           <!-- Occupation -->
+                           <div class="col-lg-6 mt-2">
+                            <div><label class="form-label">Occupation</label></div>
+                            <input type="text" nbInput
+                            fullWidth
+                            placeholder="Mother's Occupation"
+                              formControlName="motherOccupation">
+
+                          </div>
+                            <!-- Contact No -->
+                            <div class="col-lg-6 mt-2">
+                              <div><label class="form-label">Contact No</label></div>
+                              <input type="text" nbInput
+                              fullWidth
+                              placeholder="Mother's Contact No"
+                                formControlName="motherContactNo">
+                            </div>
+                        </div>
+                      </div>
+                    </nb-accordion-item-body>
+                  </nb-accordion-item>
+                   <!-- Spouse's info -->
+                   <nb-accordion-item
+                   [hidden]="personalForm.get('materialStatus').value != 2"
+                   [expanded]="true">
+                    <nb-accordion-item-header>
+                      Spouse's Info
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <!-- name -->
+                          <div class="col-lg-9">
+                            <div><label class="form-label">Name</label></div>
+                            <input type="text" nbInput fullWidth placeholder="Spouse's Name"
+                              formControlName="spouseName">
+                            <span style="font-size: 13px" class="text-danger mt-1" *ngIf="
+                familyForm.get('spouseName').touched &&
+                familyForm.get('spouseName').errors?.required
+              ">Spouse's name is required.</span>
+                          </div>
+                          <!-- age -->
+                          <div class="col-lg-3">
+                            <div><label class="form-label">Age</label></div>
+                            <input type="text" nbInput
+                            fullWidth
+                            numberOnly
+                            placeholder="Spouse's Age"
+                              formControlName="spouseAge">
+                          </div>
+                           <!-- Occupation -->
+                           <div class="col-lg-6 mt-2">
+                            <div><label class="form-label">Occupation</label></div>
+                            <input type="text" nbInput
+                            fullWidth
+                            placeholder="Spouse's Occupation"
+                              formControlName="spouseOccupation">
+                          </div>
+                            <!-- Contact No -->
+                            <div class="col-lg-6 mt-2">
+                              <div><label class="form-label">Contact No</label></div>
+                              <input type="text" nbInput
+                              fullWidth
+                              placeholder="Spouse's Contact No"
+                                formControlName="spouseContactNo">
+                           </div>
+                        </div>
+                      </div>
+                    </nb-accordion-item-body>
+                  </nb-accordion-item>
+
+
+
+                </nb-accordion>
+
+              </div>
+            </div>
+
+          </div>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="EDUCATIONAL & EMPLOYMENT">
-        <form [formGroup]="thirdForm"  class="step-container">
+        <form [formGroup]="thirdForm" class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
@@ -278,7 +387,7 @@
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="LANGUAGE PROFICIENCY">
-        <form [formGroup]="thirdForm"  class="step-container">
+        <form [formGroup]="thirdForm" class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
@@ -295,7 +404,7 @@
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="REFERENCES">
-        <form [formGroup]="thirdForm"  class="step-container">
+        <form [formGroup]="thirdForm" class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
@@ -312,7 +421,7 @@
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="ADDITIONAL INFORMATION">
-        <form [formGroup]="thirdForm"  class="step-container">
+        <form [formGroup]="thirdForm" class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
@@ -329,7 +438,7 @@
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" label="DECLARATIONS">
-        <form [formGroup]="thirdForm"  class="step-container">
+        <form [formGroup]="thirdForm" class="step-container">
           <p class="lorem">
             Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta
             platea dictumst. Check it out pot.
@@ -348,17 +457,9 @@
     </nb-stepper>
   </nb-card-body>
   <nb-card-footer class="text-center">
-    <button nbButton
-    class="mr-2"
-    shape="semi-round"
-    status="basic"
-    (click)="goBack()"
-    >Back</button>
-    <button nbButton
-    shape="semi-round"
-    status="info"
-    (click)="goForward()"
-    >Next</button>
+    <button nbButton class="mr-2" shape="semi-round" status="basic" (click)="goBack()">Back</button>
+    <button nbButton shape="semi-round" status="info" (click)="goForward()">Next</button>
+    <button nbButton class="ml-2" shape="semi-round" status="success" (click)="autoFillData()">Auto Fill Data</button>
 
   </nb-card-footer>
 </nb-card>

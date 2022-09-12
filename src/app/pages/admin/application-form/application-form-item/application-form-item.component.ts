@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '../../../../shared/components/base/base.component';
 import { JobPositon } from '../../../../shared/models/application-form.model';
 
@@ -36,6 +36,20 @@ export class ApplicationFormItemComponent extends BaseComponent implements OnIni
     epfNo: null,
     taxNo: null,
   });
+  familyForm: FormGroup = this.fb.group({
+    fatherName:  [null, Validators.required],
+    fatherAge:  null,
+    fatherOccupation: null,
+    fatherContactNo:  null,
+    motherName:  [null, Validators.required],
+    motherAge:  null,
+    motherOccupation: null,
+    motherContactNo:  null,
+    spouseName:  null,
+    spouseAge:  null,
+    spouseOccupation: null,
+    spouseContactNo:  null
+  });
   secondForm: FormGroup;
   thirdForm: FormGroup;
 
@@ -52,6 +66,15 @@ export class ApplicationFormItemComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit() {
+    this.personalForm.valueChanges.subscribe((data)=> {
+      // for married users active spouse data should be required
+      if(data.materialStatus == 2 ){
+        this.familyForm.get('spouseName').setValidators(Validators.required);
+      }else{
+        this.familyForm.get('spouseName').clearAsyncValidators();
+      }
+      this.familyForm.get('spouseName').updateValueAndValidity();
+    })
     this.secondForm = this.fb.group({
       secondCtrl: ['', Validators.required],
     });
@@ -71,9 +94,52 @@ export class ApplicationFormItemComponent extends BaseComponent implements OnIni
     if(step === 0 ){
       this.validateAllFormFields(this.personalForm);
       if(!this.personalForm.errors) this.stepper.next();
+    } else if(step === 1 ){
+      this.validateAllFormFields(this.familyForm);
+      if(!this.familyForm.errors) this.stepper.next();
     }
   }
   goBack(){
     this.stepper.previous();
+ }
+
+ autoFillData(){
+  const step = this.stepper.selectedIndex;
+  if(step === 0 ){
+    this.personalForm.get('jobPositionId').setValue(1);
+    this.personalForm.get('fullName').setValue('David Jones');
+    this.personalForm.get('identityNo').setValue('U24154141');
+    this.personalForm.get('gender').setValue(1);
+    this.personalForm.get('dateOfBirth').setValue(this.dateService.addYear(this.dateService.today(), -25));
+    this.personalForm.get('age').setValue(25);
+    this.personalForm.get('race').setValue('American');
+    this.personalForm.get('religion').setValue('Buddhism');
+    this.personalForm.get('nationality').setValue('USA');
+    this.personalForm.get('materialStatus').setValue(1);
+    this.personalForm.get('permanentAddress').setValue('permanentAddress');
+    this.personalForm.get('correspondenceAddress').setValue('correspondenceAddress');
+    this.personalForm.get('houseNo').setValue('+11251141');
+    this.personalForm.get('mobileNo').setValue('+601164144838');
+    this.personalForm.get('email').setValue('example@gmail.com');
+    this.personalForm.get('drivingLicense').setValue(1);
+    this.personalForm.get('epfNo').setValue('12345114');
+    this.personalForm.get('taxNo').setValue('Tddf256141');
+  } else if(step === 1 ){
+    this.familyForm.get('fatherName').setValue('joe');
+    this.familyForm.get('fatherAge').setValue(58);
+    this.familyForm.get('fatherOccupation').setValue('worker');
+    this.familyForm.get('fatherContactNo').setValue('06012345645');
+    this.familyForm.get('motherName').setValue('Lisa');
+    this.familyForm.get('motherAge').setValue(45);
+    this.familyForm.get('motherOccupation').setValue('housekeeper');
+    this.familyForm.get('motherContactNo').setValue('06012345645');
+    this.familyForm.get('spouseName').setValue('Marian');
+    this.familyForm.get('spouseAge').setValue(25);
+    this.familyForm.get('spouseOccupation').setValue('UI desinger');
+    this.familyForm.get('spouseContactNo').setValue('06012345645');
+
   }
+
+
+ }
 }

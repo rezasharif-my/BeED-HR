@@ -6,16 +6,18 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { NbDateService, NbToastrService } from '@nebular/theme';
 
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DimensionsService } from '../../services/dimentions.service';
 
 @UntilDestroy()
 @Component({
   template: ''
 })
-export abstract class BaseComponent implements OnInit {
+export abstract class BaseComponent implements OnInit{
   protected router: Router;
   protected toastrService: NbToastrService;
   protected dateService: NbDateService<Date>
   protected fb: FormBuilder;
+  public dimensionService: DimensionsService;
   //shared variables
   roles: string[];
 
@@ -23,7 +25,9 @@ export abstract class BaseComponent implements OnInit {
     this.router = AppInjector.injector.get(Router);
     this.fb = AppInjector.injector.get(FormBuilder);
     this.toastrService = AppInjector.injector.get(NbToastrService);
-    this.dateService = AppInjector.injector.get(NbDateService)
+    this.dateService = AppInjector.injector.get(NbDateService);
+    this.dimensionService = AppInjector.injector.get(DimensionsService);
+
     //this.roles = this.userService.getRoles();
 
   }
@@ -31,6 +35,7 @@ export abstract class BaseComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
@@ -43,4 +48,5 @@ export abstract class BaseComponent implements OnInit {
   onCansel() {
     this.router.navigate(['pages/dashboard']);
   }
+
 }
